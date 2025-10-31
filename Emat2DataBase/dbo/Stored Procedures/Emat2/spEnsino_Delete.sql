@@ -1,0 +1,8 @@
+﻿CREATE PROCEDURE [dbo].[spEnsino_Delete]
+	@Id int
+AS
+BEGIN
+	DELETE
+	FROM ENSINO
+	WHERE CODIGO = @Id
+END

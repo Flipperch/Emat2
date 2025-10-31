@@ -1,0 +1,9 @@
+﻿CREATE PROCEDURE [dbo].[spEnsino_GetAll]
+AS
+BEGIN
+	SELECT 
+		CODIGO AS Id, 
+		NOME_ENSINO AS EnsinoNome 
+	FROM 
+		ENSINO
+END

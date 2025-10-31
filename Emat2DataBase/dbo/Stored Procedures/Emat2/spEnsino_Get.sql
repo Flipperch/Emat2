@@ -1,0 +1,12 @@
+﻿CREATE PROCEDURE [dbo].[spEnsino_Get]
+	@Id int
+AS
+BEGIN
+	SELECT 
+		CODIGO AS Id, 
+		NOME_ENSINO AS EnsinoNome 
+	FROM 
+		ENSINO
+	WHERE 
+		CODIGO = @Id
+END
