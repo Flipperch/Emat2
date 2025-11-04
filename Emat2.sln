@@ -11,10 +11,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Emat2DataAccess", "Emat2Dat
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Emat2DataBase", "Emat2DataBase\Emat2DataBase.sqlproj", "{456B41DD-F95D-4F21-8732-C771399ADFA1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Emat2.WebApp", "Emat2.WebApp\Emat2.WebApp\Emat2.WebApp.csproj", "{FAA545F8-5863-4282-A9B0-26832AE1012D}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Emat2.WebApp.Client", "Emat2.WebApp\Emat2.WebApp.Client\Emat2.WebApp.Client.csproj", "{B203A835-6513-43ED-9CCB-38527434A9B8}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebApp", "WebApp", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
 EndProject
 Global
@@ -41,21 +37,9 @@ Global
 		{456B41DD-F95D-4F21-8732-C771399ADFA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{456B41DD-F95D-4F21-8732-C771399ADFA1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{456B41DD-F95D-4F21-8732-C771399ADFA1}.Release|Any CPU.Deploy.0 = Release|Any CPU
-		{FAA545F8-5863-4282-A9B0-26832AE1012D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FAA545F8-5863-4282-A9B0-26832AE1012D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FAA545F8-5863-4282-A9B0-26832AE1012D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FAA545F8-5863-4282-A9B0-26832AE1012D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B203A835-6513-43ED-9CCB-38527434A9B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B203A835-6513-43ED-9CCB-38527434A9B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B203A835-6513-43ED-9CCB-38527434A9B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B203A835-6513-43ED-9CCB-38527434A9B8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{FAA545F8-5863-4282-A9B0-26832AE1012D} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
-		{B203A835-6513-43ED-9CCB-38527434A9B8} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {506F6C92-252D-4061-A331-223E15144037}
