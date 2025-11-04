@@ -1,4 +1,5 @@
-using Emat2.WebApp.Client.Pages;
+using Emat2.WebApp.Client.Services;
+using Emat2.WebApp.Client.Startup;
 using Emat2.WebApp.Components;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,6 +8,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents()
     .AddInteractiveWebAssemblyComponents();
+
+//builder.Services.AddScoped<IUsuarioService, ClientUsuarioService>();
+
+AppDependenciesConfig.ConfigureCommonServices(builder.Services);
 
 var app = builder.Build();
 

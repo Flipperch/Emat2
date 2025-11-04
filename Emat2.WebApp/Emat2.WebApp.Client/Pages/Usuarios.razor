@@ -1,0 +1,204 @@
+﻿@page "/usuarios"
+@using Emat2.WebApp.Client.Models
+@using Emat2.WebApp.Client.Services
+@inject IUsuarioService UsuarioService
+
+<PageTitle>Usuários</PageTitle>
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <EditForm EditContext="editContext" FormName="usuarioForm" OnValidSubmit="HandleOnValidSubmit">
+                <div class="col md-4 mb-3">
+                    <label for="inputFullName" class="form-label">Nome Completo</label>
+                    <input type="text" class="form-control" id="inputFullName" @bind-value="usuario!.FullName">
+                    <ValidationMessage For="() => usuario.FullName" />
+                </div>
+                <div class="mb-3">
+                    <label for="inputRG" class="form-label">RG</label>
+                    <input type="text" class="form-control" id="inputRG" @bind-value="usuario!.RG">
+                    <ValidationMessage For="() => usuario.RG" />
+                </div>
+                <div class="mb-3">
+                    <label for="inputEmail" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="inputEmail" @bind-value="usuario!.Email">
+                    <ValidationMessage For="() => usuario.Email" />
+                </div>
+                <div class="mb-3">
+                    <label for="inputUserName" class="form-label">Nome de Usuário</label>
+                    <input type="text" class="form-control" id="inputUserName" @bind-value="usuario!.UserName">
+                    <ValidationMessage For="() => usuario.UserName" />
+                </div>
+                <div class="mb-3">
+                    <label for="inputPassword" class="form-label">Senha</label>
+                    <input type="password" class="form-control" id="inputPassword" @bind-value="usuario!.Password">
+                    <ValidationMessage For="() => usuario.Password" />
+                </div>
+                <div class="mb-3">
+                    <label for="selectUserType" class="form-label">Tipo de Usuário</label>
+                    <InputSelect class="form-select" id="selectUserType" @bind-Value="usuario!.UserType">
+                        <option selected value="">Selecione...</option>
+                        <option value="1">Administrador</option>
+                        <option value="2">Secretário</option>
+                        <option value="3">Gerente</option>
+                        <option value="4">Professor</option>
+                        <option value="5">Coordenador</option>
+                        <option value="6">Diretor</option>
+                    </InputSelect>
+                    <ValidationMessage For="() => usuario.UserType" />
+                </div>
+                <div class="mb-3">
+                    <label for="selectIsActive" class="form-label">Usuário Ativo </label>
+                    <InputSelect class="form-select" id="selectIsActive" @bind-Value="usuario!.IsActive">
+                        <option selected value="true">Ativo</option>
+                        <option value="false">Inativo</option>
+                    </InputSelect>
+                </div>
+                <div class="mb-3">
+                    <button Type="submit" Class="btn btn-primary">Salvar</button>
+                    <button Type="reset" Class="btn btn-secondary" @onclick="ResetForm">Limpar</button>
+                </div>
+            </EditForm>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            @if (usuarios == null)
+            {
+                <p><em>Loading...</em></p>
+            }
+            else if (usuarios.Length == 0)
+            {
+                <p><em>No users found.</em></p>
+            }
+            else
+            {
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Nome Completo</th>
+                            <th>RG</th>
+                            <th>Email</th>
+                            <th>Nome de Usuário</th>
+                            <th>Senha</th> @* TODO: remover coluna senha depois dos testes *@
+                            <th>Tipo de Usuário</th>
+                            <th>Ativo</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var usuarioItem in usuarios)
+                        {
+                            <tr>
+                                @* <td style="display:none">@usuarioItem.Id</td> *@
+                                <td>@usuarioItem.FullName</td>
+                                <td>@usuarioItem.RG</td>
+                                <td>@usuarioItem.Email</td>
+                                <td>@usuarioItem.UserName</td>
+                                <td>@usuarioItem.Password</td>
+                                <td>@usuarioItem.UserType</td>
+                                <td class="text-center">
+                                    <input type="checkbox" @bind="@usuarioItem.IsActive" />
+                                </td>
+                                <td class="text-center">
+                                    <button class="btn btn-warning" @onclick="@(() => EditUsuario(usuarioItem.Id!))">
+                                        Editar
+                                    </button>
+                                    <button class="btn btn-danger" @onclick="@(async () => await DeleteUsuario(usuarioItem.Id!))">
+                                        Delete
+                                    </button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+        </div>
+    </div>
+</div>
+
+@code {
+
+    private EditContext? editContext;
+
+    [SupplyParameterFromForm]
+    private UsuarioModel? usuario { get; set; }
+
+    private UsuarioModel[]? usuarios;
+
+    protected override async Task OnInitializedAsync()
+    {
+        usuario = new();
+        editContext = new(usuario);
+
+        await GetUsuarios();
+    }
+
+    private async Task GetUsuarios()
+    {
+        usuarios = await UsuarioService.GetUsuariosAsync() ?? Array.Empty<UsuarioModel>();
+    }
+
+    private void EditUsuario(string id)
+    {
+        if (usuarios is not null)
+        {
+            usuario = usuarios.Single(i => i.Id == id);
+            editContext = new(usuario);
+        }
+    }
+
+    private async Task AddUsuario()
+    {
+        await UsuarioService.CreateUsuarioAsync(usuario!);
+        ResetForm();
+        await GetUsuarios();
+    }
+
+    private async Task SaveUsuario()
+    {
+        if (usuario is not null)
+        {
+            await UsuarioService.UpdateUsuarioAsync(usuario.Id!, usuario);
+        }
+        await GetUsuarios();
+    }
+
+    private async Task DeleteUsuario(string id)
+    {
+        //await UsuarioService.DeleteUsuarioAsync(id);
+        await GetUsuarios();
+    }
+
+    protected override void OnInitialized()
+    {
+        // usuario ??= new();
+        // editContext = new(usuario);
+        // base.OnInitialized();
+    }
+
+    private void HandleOnValidSubmit()
+    {
+        // additional check
+        if (editContext!.Validate())
+        {
+            // check if it's a new user or existing user
+            if (string.IsNullOrEmpty(usuario!.Id))
+            {
+                // new user
+                _ = AddUsuario();
+            }
+            else
+            {
+                // existing user
+                _ = SaveUsuario();
+            }            
+        }
+    }
+
+    private void ResetForm()
+    {
+        usuario = new();
+        editContext = new(usuario);
+    }
+}
